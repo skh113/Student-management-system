@@ -35,7 +35,7 @@ class TeacherSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create(**validated_data)
-        return Student.objects.create(user=user, **validated_data)
+        return Teacher.objects.create(user=user, **validated_data)
 
     class Meta:
         model = Teacher
@@ -58,14 +58,8 @@ class TopicSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class LessonTopicSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Topic
-        fields = ['title']
-
-
 class LessonSerializer(serializers.ModelSerializer):
-    topic = LessonTopicSerializer()
+    topic = TopicSerializer()
     teacher = SimpleTeacherSerializer()
     students = SimpleStudentSerializer(many=True)
 
