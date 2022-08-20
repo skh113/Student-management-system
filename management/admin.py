@@ -26,3 +26,11 @@ class TeacherAdmin(admin.ModelAdmin):
 class TopicAdmin(admin.ModelAdmin):
     list_display = ['title']
     search_fields = ['title']
+
+
+@admin.register(models.Lesson)
+class LessonAdmin(admin.ModelAdmin):
+    list_display = ['title', 'topic', 'class_number',
+                    'teacher', 'start_date', 'finish_date']
+    search_fields = ['title', 'teacher']
+    list_editable = ['class_number']
