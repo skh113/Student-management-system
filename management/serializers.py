@@ -51,7 +51,7 @@ class SimpleTeacherSerializer(serializers.ModelSerializer):
 
 
 class TopicSerializer(serializers.ModelSerializer):
-    teacher = TeacherSerializer(many=True)
+    teacher = SimpleTeacherSerializer(many=True)
 
     class Meta:
         model = Topic
@@ -59,9 +59,9 @@ class TopicSerializer(serializers.ModelSerializer):
 
 
 class LessonSerializer(serializers.ModelSerializer):
-    topic = TopicSerializer()
-    teacher = SimpleTeacherSerializer()
-    students = SimpleStudentSerializer(many=True)
+    topic = TopicSerializer(read_only=True)
+    teacher = SimpleTeacherSerializer(read_only=True)
+    students = SimpleStudentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Lesson
