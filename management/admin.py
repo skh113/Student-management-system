@@ -7,18 +7,22 @@ from . import models
 @admin.register(models.Student)
 class StudentAdmin(admin.ModelAdmin):
     autocomplete_fields = ['user']
-    list_display = ['user', 'gpa', 'enrollment_date']
+    list_display = ['user', 'first_name',
+                    'last_name', 'gpa', 'enrollment_date']
     list_per_page = 18
-    search_fields = ['user']
+    search_fields = ['user', 'first_name__istartswith',
+                     'last_name__istartswith']
     list_editable = ['gpa']
 
 
 @admin.register(models.Teacher)
 class TeacherAdmin(admin.ModelAdmin):
     autocomplete_fields = ['user']
-    list_display = ['user', 'is_engaged', 'joined_date']
+    list_display = ['user', 'first_name', 'last_name',
+                    'is_engaged', 'joined_date']
     list_per_page = 18
-    search_fields = ['user']
+    search_fields = ['user', 'first_name__istartswith',
+                     'last_name__istartswith']
     list_editable = ['is_engaged']
 
 
