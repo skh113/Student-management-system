@@ -26,6 +26,7 @@ class Student(models.Model):
 
 class Teacher(models.Model):
     joined_date = models.DateField(auto_now=True)
+    is_engaged = models.BooleanField(default=False)
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
