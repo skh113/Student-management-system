@@ -37,8 +37,9 @@ class Topic(models.Model):
     teacher = models.ManyToManyField(Teacher)
 
 
-class lesson(models.Model):
+class Lesson(models.Model):
     title = models.CharField(max_length=255)
+    topic = models.ForeignKey(Topic, on_delete=models.PROTECT, null=True)
     class_number = models.IntegerField()
     teacher = models.ForeignKey(Teacher, on_delete=models.PROTECT)
     students = models.ManyToManyField(Student)

@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import Student, Teacher
+from .models import Lesson, Student, Teacher, Topic
 from core.models import User
-from core.serializers import UserSerializer
+from core.serializers import SimpleUserSerializer, UserSerializer
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -22,6 +22,14 @@ class StudentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class SimpleStudentSerializer(serializers.ModelSerializer):
+    user = SimpleUserSerializer()
+
+    class Meta:
+        model = Student
+        fields = ["id", "user"]
+
+
 class TeacherSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
@@ -31,4 +39,36 @@ class TeacherSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Teacher
+        fields = '__all__'
+
+
+class SimpleTeacherSerializer(serializers.ModelSerializer):
+    user = SimpleUserSerializer()
+
+    class Meta:
+        model = Teacher
+        fields = ["id", "user"]
+
+
+class TopicSerializer(serializers.ModelSerializer):
+    teacher = TeacherSerializer(many=True)
+
+    class Meta:
+        model = Topic
+        fields = '__all__'
+
+
+class LessonTopicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Topic
+        fields = ['title']
+
+
+class LessonSerializer(serializers.ModelSerializer):
+    topic = LessonTopicSerializer()
+    teacher = SimpleTeacherSerializer()
+    students = SimpleStudentSerializer(many=True)
+
+    class Meta:
+        model = Lesson
         fields = '__all__'
